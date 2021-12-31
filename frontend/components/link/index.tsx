@@ -5,18 +5,25 @@ import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
 
-// Add support for the sx prop for consistency with the other branches.
-const Anchor = styled('a')({});
-
-interface NextLinkComposedProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
-    Omit<NextLinkProps, 'href' | 'as'> {
+type NextLinkComposedProps = {
   to: NextLinkProps['href'];
   linkAs?: NextLinkProps['as'];
   href?: NextLinkProps['href'];
-}
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & Omit<NextLinkProps, 'href' | 'as'>
 
-export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(
+type LinkProps = {
+  activeClassName?: string;
+  as?: NextLinkProps['as'];
+  href: NextLinkProps['href'];
+  linkAs?: NextLinkProps['as']; // Useful when the as prop is shallow by styled().
+  noLinkStyle?: boolean;
+} & Omit<NextLinkComposedProps, 'to' | 'linkAs' | 'href'> &
+  Omit<MuiLinkProps, 'href'>;
+
+// Add support for the sx prop for consistency with the other branches.
+const Anchor = styled('a')({});
+
+const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(
   function NextLinkComposed(props, ref) {
     const { to, linkAs, href, replace, scroll, shallow, prefetch, locale, ...other } = props;
 
@@ -36,15 +43,6 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
     );
   },
 );
-
-export type LinkProps = {
-  activeClassName?: string;
-  as?: NextLinkProps['as'];
-  href: NextLinkProps['href'];
-  linkAs?: NextLinkProps['as']; // Useful when the as prop is shallow by styled().
-  noLinkStyle?: boolean;
-} & Omit<NextLinkComposedProps, 'to' | 'linkAs' | 'href'> &
-  Omit<MuiLinkProps, 'href'>;
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/api-reference/next/link
@@ -92,4 +90,5 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
   );
 });
 
-export { Link };
+export { NextLinkComposed, Link };
+export type { NextLinkComposedProps, LinkProps }
