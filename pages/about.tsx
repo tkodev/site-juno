@@ -6,9 +6,9 @@ import Button from '@mui/material/Button';
 import { Link } from '@/frontend/components/link';
 import { Layout } from '@/frontend/components/layout'
 
-const Home: NextPage = () => {
+const About: NextPage = () => {
   return (
-    <Layout title='Home' desc='Home'>
+    <Layout title='About' desc='About'>
       <Container maxWidth="lg">
         <Box
           sx={{
@@ -23,8 +23,8 @@ const Home: NextPage = () => {
             MUI v5 + Next.js with TypeScript example
           </Typography>
           <Box maxWidth="sm">
-            <Button variant="contained" component={Link} noLinkStyle href="/about">
-              Go to the About page
+            <Button variant="contained" component={Link} noLinkStyle href="/">
+              Go to the Home page
             </Button>
           </Box>
         </Box>
@@ -33,4 +33,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default About
