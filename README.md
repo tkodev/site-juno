@@ -1,5 +1,5 @@
 # site-juno
-⚡ Codebase for Tony Ko's personal portfolio homepage
+⚡ Codebase for Tony Ko's personal dashboard
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
