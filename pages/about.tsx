@@ -3,8 +3,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { Link } from '@/frontend/components/link';
-import { Layout } from '@/frontend/components/layout'
+import { Link } from '@/components/link';
+import { Layout } from '@/components/layout'
 
 const About: NextPage = () => {
   return (
