@@ -1,15 +1,19 @@
 import React from 'react'
+import { makeStyles } from '@mui/styles';
 
-type ExampleProps = {
-  title?: string
-}
+const useStyles = makeStyles({
+  root: {
+    gridRow: 3,
+  }
+})
 
-const Example: React.FC<ExampleProps> = (props) => {
-  const { title,  children } = props 
+const Example: React.FC = (props) => {
+  const { children } = props
+  const styles = useStyles(props)
 
   return (
-    <div>
-      {title}
+    <div className={styles.root}>
+      example
       {children}
     </div>
   )
