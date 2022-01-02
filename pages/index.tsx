@@ -1,36 +1,41 @@
 import { NextPage } from 'next'
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { Link } from '@/components/link';
+import { Typography, Container, Grid } from '@mui/material';
 import { Layout } from '@/components/layout'
+import { dockerClient } from '@/configs/axios'
+import { DockerApp } from '@/types/docker'
+import { mockApps } from '@/mocks/docker'
+import { AppCard } from '@/components/app-card'
 
-const Home: NextPage = () => {
+type HomePageProps = {
+  apps: DockerApp[]
+}
+
+const Home: NextPage<HomePageProps> = (props) => {
+  const { apps } = props
+
   return (
     <Layout title='Home' desc='Home'>
       <Container maxWidth="lg">
-        <Box
-          sx={{
-            my: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant="h4" component="h1" gutterBottom>
-            MUI v5 + Next.js with TypeScript example
-          </Typography>
-          <Box maxWidth="sm">
-            <Button variant="contained" component={Link} noLinkStyle href="/about">
-              Go to the About page
-            </Button>
-          </Box>
-        </Box>
+        <Typography> Apps </Typography>
+        <Grid container spacing={1}>
+          {apps.map((app) => {
+            <Grid item xs={12} md={6} lg={4} key={`appGrid-${app.Id}`}>
+              <AppCard app={app} />
+            </Grid>
+          })}
+        </Grid>
       </Container>
     </Layout>
   )
 }
 
+const getServerSideProps = async () => {
+  const apps = mockApps
+  // const apps: DockerApp[] = await dockerClient.get('/containers/json').then((res) => res.data)
+  const props = { apps }
+  
+  return { props }
+}
+
+export { getServerSideProps }
 export default Home

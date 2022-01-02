@@ -6,4 +6,9 @@ const axiosClient = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
 });
 
-export { axiosClient }
+const dockerClient = axios.create({
+  baseURL: 'http://localhost/v1.41',
+  socketPath: '/var/run/docker.sock'
+});
+
+export { axiosClient, dockerClient }
