@@ -12,7 +12,6 @@ type HomePageProps = {
 
 const Home: NextPage<HomePageProps> = (props) => {
   const { apps } = props
-  console.log({apps})
 
   return (
     <Layout title='Home' desc='Home'>
@@ -36,8 +35,8 @@ const Home: NextPage<HomePageProps> = (props) => {
 }
 
 const getServerSideProps = async () => {
-  const apps = mockApps
-  // const apps: DockerApp[] = await dockerClient.get('/containers/json').then((res) => res.data)
+  // const apps = mockApps
+  const apps: DockerApp[] = await dockerClient.get('/containers/json').then((res) => res.data)
   const props = { apps }
   
   return { props }

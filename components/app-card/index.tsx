@@ -26,8 +26,6 @@ const AppCard: React.FC<AppCardProps> = (props) => {
   const { app } = props
   const styles = useStyles(props)
 
-  console.log({ props })
-
   const name = app?.Names[0]
   const url = getDockerLabelUrl(app?.Labels)
   const color = stateColorMap[app?.State ?? '']
