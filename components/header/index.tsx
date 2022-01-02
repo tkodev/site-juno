@@ -13,7 +13,6 @@ const Header: React.FC = (props) => {
 
   return (
     <header className={styles.root}>
-      header
       {children}
     </header>
   )

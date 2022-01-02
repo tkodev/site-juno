@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { Typography, Container, Grid } from '@mui/material';
+import { Typography, Container, Grid, Box, Divider } from '@mui/material';
 import { Layout } from '@/components/layout'
 import { dockerClient } from '@/configs/axios'
 import { DockerApp } from '@/types/docker'
@@ -12,17 +12,23 @@ type HomePageProps = {
 
 const Home: NextPage<HomePageProps> = (props) => {
   const { apps } = props
+  console.log({apps})
 
   return (
     <Layout title='Home' desc='Home'>
       <Container maxWidth="lg">
-        <Typography> Apps </Typography>
+      <Typography variant="h2">
+          Apps
+        </Typography>
+        <Box my={2}>
+          <Divider />
+        </Box>
         <Grid container spacing={1}>
-          {apps.map((app) => {
+          {apps?.map((app) => 
             <Grid item xs={12} md={6} lg={4} key={`appGrid-${app.Id}`}>
               <AppCard app={app} />
             </Grid>
-          })}
+          )}
         </Grid>
       </Container>
     </Layout>

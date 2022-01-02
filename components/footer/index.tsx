@@ -13,7 +13,6 @@ const Footer: React.FC = (props) => {
 
   return (
     <footer className={styles.root}>
-      footer
       {children}
     </footer>
   )

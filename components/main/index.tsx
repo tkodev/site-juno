@@ -13,7 +13,6 @@ const Main: React.FC = (props) => {
 
   return (
     <main className={styles.root}>
-      main
       {children}
     </main>
   )
