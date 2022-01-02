@@ -1,23 +1,25 @@
 # Install dependencies only when needed
-FROM node:alpine AS deps
+FROM node:14-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package.json ./
-RUN yarn install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Rebuild the source code only when needed
-FROM node:alpine AS builder
+FROM node:14-alpine AS builder
 WORKDIR /app
-COPY . .
+COPY . ./
 COPY --from=deps /app/node_modules ./node_modules
-RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
+RUN npm run build && npm ci --production --ignore-scripts --prefer-offline
 
 # Production image, copy all the files and run next
-FROM node:alpine AS runner
+FROM node:14-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV production
 RUN addgroup -g 1001 -S nextjs
-RUN adduser -S nextjs -u 1001
+RUN adduser -u 1001 -S nextjs
+RUN addgroup -g 998 -S docker
+RUN adduser nextjs docker
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/next.config.js ./
