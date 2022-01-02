@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = (props) => {
     <div className={styles.root}>
       <Head>
         {title && <title>{title}</title>}
-        {desc && <meta name="description" content={desc} />}
+        {desc && <meta name='description' content={desc} />}
       </Head>
       <Header />
       <Main>

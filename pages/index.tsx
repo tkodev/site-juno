@@ -3,7 +3,6 @@ import { Typography, Container, Grid, Box, Divider } from '@mui/material';
 import { Layout } from '@/components/layout'
 import { dockerClient } from '@/configs/axios'
 import { DockerApp } from '@/types/docker'
-import { mockApps } from '@/mocks/docker'
 import { AppCard } from '@/components/app-card'
 
 type HomePageProps = {
@@ -15,16 +14,16 @@ const Home: NextPage<HomePageProps> = (props) => {
 
   return (
     <Layout title='Home' desc='Home'>
-      <Container maxWidth="lg">
-      <Typography variant="h2">
+      <Container maxWidth='lg'>
+        <Typography variant='h2'>
           Apps
         </Typography>
         <Box my={2}>
           <Divider />
         </Box>
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
           {apps?.map((app) => 
-            <Grid item xs={12} md={6} lg={4} key={`appGrid-${app.Id}`}>
+            <Grid item xs={12} sm={6} md={4} key={`appGrid-${app.Id}`}>
               <AppCard app={app} />
             </Grid>
           )}
@@ -35,7 +34,6 @@ const Home: NextPage<HomePageProps> = (props) => {
 }
 
 const getServerSideProps = async () => {
-  // const apps = mockApps
   const apps: DockerApp[] = await dockerClient.get('/containers/json').then((res) => res.data)
   const props = { apps }
   

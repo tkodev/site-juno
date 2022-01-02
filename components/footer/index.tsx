@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles({
   root: {
     gridRow: 3,
+    height: 16,
   }
 })
 

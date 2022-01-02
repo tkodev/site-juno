@@ -1,7 +1,7 @@
 type DockerPort = {
   PrivatePort: number;
   PublicPort: number;
-  Type: "tcp"| "upd"
+  Type: 'tcp'| 'upd'
 }
 
 type DockerNetwork = {
@@ -26,6 +26,8 @@ type DockerMount = {
   Propagation: string;
 }
 
+type DockerAppState = 'created' | 'restarting' | 'running' | 'removing' | 'paused' | 'exited' | 'dead'
+
 type DockerApp = {
   Id: string;
   Names: string[];
@@ -33,7 +35,7 @@ type DockerApp = {
   ImageID: string;
   Command: string;
   Created: number;
-  State: "Created"|"Restarting"|"Running"|"Removing"|"Paused"|"Exited"|"Dead";
+  State: DockerAppState;
   Status: string;
   Ports: DockerPort[];
   Labels: Record<string, string>;
@@ -48,4 +50,4 @@ type DockerApp = {
   Mounts: DockerMount[];
 };
 
-export type { DockerPort, DockerNetwork, DockerMount, DockerApp };
+export type { DockerPort, DockerNetwork, DockerMount, DockerAppState, DockerApp };
