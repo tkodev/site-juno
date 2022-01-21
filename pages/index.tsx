@@ -41,23 +41,26 @@ const Home: NextPage<HomePageProps> = (props) => {
 const getServerSideProps = async () => {
   const apps = await dockerClient.get<DockerApp[]>('/containers/json').then((res) => res.data)
 
-  const cards = apps.map<DockerCard>((app) => {
-    const { Names, State, Status, Labels } = app
-    const container = Names[0]?.replace('/', '') ?? ''
-    const state = State
-    const status = Status
-    const name = getDockerLabelName(Labels)
-    const url = getDockerLabelUrl(Labels)
-    return {
-      container,
-      state,
-      status,
-      name,
-      url,
-    }
-  }).filter(({name}) => Boolean(name))
+  const cards = apps
+    .map<DockerCard>((app) => {
+      const { Names, State, Status, Labels } = app
+      const container = Names[0]?.replace('/', '') ?? ''
+      const state = State
+      const status = Status
+      const name = getDockerLabelName(Labels)
+      const url = getDockerLabelUrl(Labels)
+      return {
+        container,
+        state,
+        status,
+        name,
+        url,
+      }
+    })
+    .filter(({name}) => Boolean(name))
+    .sort((a, b) => a.container.localeCompare(b.container))
+
   const props = { cards }
-  
   return { props }
 }
 
