@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:docker": "docker build -t tkodev/site-juno:latest .",
     "start": "next start",
     "test": "jest --passWithNoTests",
     "check": "tsc --pretty",

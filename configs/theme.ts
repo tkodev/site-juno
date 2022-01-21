@@ -8,7 +8,12 @@ const createEmotionCache = () => {
 }
 
 const theme = createTheme({
-  // Create a theme instance.
+  typography: {
+    fontSize: 12,
+  },
 });
 
+type Theme = typeof theme
+
 export { theme, createEmotionCache };
+export type { Theme }

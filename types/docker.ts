@@ -50,4 +50,13 @@ type DockerApp = {
   Mounts: DockerMount[];
 };
 
-export type { DockerPort, DockerNetwork, DockerMount, DockerAppState, DockerApp };
+
+type DockerCard = {
+  container: string
+  state: DockerAppState
+  status: string
+  name?: string
+  url?: string
+}
+
+export type { DockerPort, DockerNetwork, DockerMount, DockerAppState, DockerApp, DockerCard };

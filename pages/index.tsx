@@ -2,40 +2,61 @@ import { NextPage } from 'next'
 import { Typography, Container, Grid, Box, Divider } from '@mui/material';
 import { Layout } from '@/components/layout'
 import { dockerClient } from '@/configs/axios'
-import { DockerApp } from '@/types/docker'
-import { AppCard } from '@/components/app-card'
+import { DockerApp, DockerCard } from '@/types/docker'
+import { DockerAppCard } from '@/components/docker-app-card'
+import { getDockerLabelName, getDockerLabelUrl } from '@/utils/docker'
 
 type HomePageProps = {
-  apps: DockerApp[]
+  cards: DockerCard[]
 }
 
 const Home: NextPage<HomePageProps> = (props) => {
-  const { apps } = props
+  const { cards } = props
 
   return (
     <Layout title='Home' desc='Home'>
       <Container maxWidth='lg'>
+        <Box my={2}>
         <Typography variant='h2'>
-          Apps
+          Applications
         </Typography>
+        </Box>
         <Box my={2}>
           <Divider />
         </Box>
-        <Grid container spacing={2}>
-          {apps?.map((app) => 
-            <Grid item xs={12} sm={6} md={4} key={`appGrid-${app.Id}`}>
-              <AppCard app={app} />
-            </Grid>
-          )}
-        </Grid>
+        <Box my={2}>
+          <Grid container spacing={2}>
+            {cards?.map((card) =>
+              <Grid item xs={12} sm={6} md={4} key={`dockerAppCardGrid-${card.container}`}>
+                <DockerAppCard card={card} />
+              </Grid>
+            )}
+          </Grid>
+        </Box>
       </Container>
     </Layout>
   )
 }
 
 const getServerSideProps = async () => {
-  const apps: DockerApp[] = await dockerClient.get('/containers/json').then((res) => res.data)
-  const props = { apps }
+  const apps = await dockerClient.get<DockerApp[]>('/containers/json').then((res) => res.data)
+
+  const cards = apps.map<DockerCard>((app) => {
+    const { Names, State, Status, Labels } = app
+    const container = Names[0]?.replace('/', '') ?? ''
+    const state = State
+    const status = Status
+    const name = getDockerLabelName(Labels)
+    const url = getDockerLabelUrl(Labels)
+    return {
+      container,
+      state,
+      status,
+      name,
+      url,
+    }
+  }).filter(({name}) => Boolean(name))
+  const props = { cards }
   
   return { props }
 }
