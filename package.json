@@ -1,11 +1,11 @@
 {
-  "name": "site-juno",
+  "name": "site-dev.tko.juno",
   "description": "⚡ Codebase for Tony Ko's personal dashboard",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:docker": "docker build -t tkodev/site-juno:latest .",
+    "build:docker": "docker build -t tkodev/juno:latest .",
     "start": "next start",
     "test": "jest --passWithNoTests",
     "check": "tsc --pretty",
